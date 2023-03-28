@@ -4,7 +4,6 @@ import AnimatedNavbar from "@/components/navbar/animated";
 import { Raleway } from "next/font/google";
 import React from "react";
 
-
 const raleway = Raleway({ subsets: ["latin"] });
 
 export default function Home() {
@@ -12,10 +11,13 @@ export default function Home() {
     <>
       <div className={raleway.className}>
         <AnimatedNavbar>
-          <h1>ss</h1>
+          <div className="h-3/6  flex flex-col justify-center items-center">
+              <h1 className="text-[#3d2f33] text-6xl  text-center w-4/6">
+                Helping companies create without limits.
+              </h1>
+          </div>
         </AnimatedNavbar>
       </div>
     </>
   );
 }
-
