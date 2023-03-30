@@ -5,7 +5,6 @@ class NavbarAnimator {
     fill: Variants;
     parent: Variants;
     grandparent: Variants;
-    sibling: Variants;
     contentParent: Variants;
   
     constructor() {
@@ -74,20 +73,7 @@ class NavbarAnimator {
   
 
   
-      this.sibling = {
-        hidden: {
-          height: "300px",
-        },
-        show: {
-          height: "10px",
-          transition: {
-            duration: 1,
-            delay: 3,
-            ease: "linear",
-          },
-        },
-      };
-  
+
       this.contentParent = {
         hidden: {
           opacity: 0,

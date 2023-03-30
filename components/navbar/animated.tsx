@@ -1,13 +1,26 @@
 import { NavbarAnimator, NavbarAnimatorSmall } from "@/utils/animations/intro";
-import { useMediaQuery } from "@/utils/hooks/size";
+import { useMediaQuery, useSize } from "@/utils/hooks/size";
 import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
 import NavbarElement from "./element";
 
 function AnimatedNavbar({ children }: { children: React.ReactNode }) {
-    const needsDrawer = useMediaQuery("(max-width: 480px)");
+    const size = useSize()
+    const [initialLogoParentSize, setLogoParentSize] = useState({ width: 0, height: 0 });
 
-    const logoDrawer = needsDrawer ? new NavbarAnimatorSmall() : new NavbarAnimator();
+    const logoDrawer = size.category === "sm" ? new NavbarAnimatorSmall() : new NavbarAnimator();
   
+    useEffect(() => {
+      const logo = document.getElementById("logo");
+      if (logo) {
+        setLogoParentSize({
+          width: logo.clientWidth,
+          height: logo.clientHeight,
+        });
+      }
+    }, [window]);
+
+
     return (
       <motion.div
         className=" w-screen h-screen flex-col absolute top-0 left-0 right-0 bottom-0 overflow-hidden "
@@ -17,7 +30,21 @@ function AnimatedNavbar({ children }: { children: React.ReactNode }) {
       >
         <motion.div
           className={` w-screen`}
-          variants={logoDrawer.sibling}
+          variants={{
+            hidden: {
+              height: size.size[1] - initialLogoParentSize.height + "px",
+              minHeight: "10%"
+            },
+            show: {
+              height: "10px",
+              minHeight: "1%",
+              transition: {
+                duration: 1,
+                delay: 3,
+                ease: "linear",
+              },
+            },
+          }}
           initial="hidden"
           animate="show"
         />
@@ -25,7 +52,6 @@ function AnimatedNavbar({ children }: { children: React.ReactNode }) {
         <motion.div
           initial="hidden"
           animate="show"
-          id="logo"
           className="flex-row justify-end items-center w-screen h-[10%]"
         >
           <div className="absolute h-full w-full px-[2%] flex justify-between">

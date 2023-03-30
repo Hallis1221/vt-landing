@@ -13,7 +13,7 @@ export default function Home() {
         <AnimatedNavbar>
           <div className="h-3/6  flex flex-col justify-center items-center">
               <h1 className="text-[#3d2f33] text-6xl  text-center w-4/6">
-                Helping companies create without limits.
+                wow dette er tekst wow
               </h1>
           </div>
         </AnimatedNavbar>
