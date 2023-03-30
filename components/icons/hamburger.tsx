@@ -16,7 +16,7 @@ const path02Variants = {
     hidden: { d: "M0 14.5L15 14.5" }
 };
 
-export default ({isOpen, setIsOpen}: {isOpen: boolean, setIsOpen: (isOpen: boolean) => void}) => {
+const HamburgerIcon = ({isOpen, setIsOpen}: {isOpen: boolean, setIsOpen: (isOpen: boolean) => void}) => {
   const path01Controls = useAnimation();
   const path02Controls = useAnimation();
 
@@ -52,5 +52,7 @@ export default ({isOpen, setIsOpen}: {isOpen: boolean, setIsOpen: (isOpen: boole
         />
       </svg>
     </button>
-  );
+);
 };
+
+export default HamburgerIcon;
