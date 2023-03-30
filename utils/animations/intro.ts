@@ -99,10 +99,24 @@ class NavbarAnimator {
           maxWidth: "1000px",
         },
         show: {
-          width: "25%",
+          width: "33%",
           transition: {
             duration: 2,
             delay: 2,
+            ease: "linear",
+          },
+        },
+      };
+
+      this.contentParent = {
+        hidden: {
+          opacity: 0,
+        },
+        show: {
+          opacity: 1,
+          transition: {
+            duration: 1,
+            delay: 0,
             ease: "linear",
           },
         },

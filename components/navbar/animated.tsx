@@ -2,12 +2,13 @@ import { NavbarAnimator, NavbarAnimatorSmall } from "@/utils/animations/intro";
 import { useMediaQuery, useSize } from "@/utils/hooks/size";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
-import NavbarElement from "./element";
+import NavbarElement, {HamburgerElement} from "./element";
+import Hamburger from "../icons/hamburger";
 
 function AnimatedNavbar({ children }: { children: React.ReactNode }) {
     const size = useSize()
     const [initialLogoParentSize, setLogoParentSize] = useState({ width: 0, height: 0 });
-
+console.log(size.category)
     const logoDrawer = size.category === "sm" ? new NavbarAnimatorSmall() : new NavbarAnimator();
   
     useEffect(() => {
@@ -18,7 +19,7 @@ function AnimatedNavbar({ children }: { children: React.ReactNode }) {
           height: logo.clientHeight,
         });
       }
-    }, [window]);
+    }, []);
 
 
     return (
@@ -54,20 +55,10 @@ function AnimatedNavbar({ children }: { children: React.ReactNode }) {
           animate="show"
           className="flex-row justify-end items-center w-screen h-[10%]"
         >
-          <div className="absolute h-full w-full px-[2%] flex justify-between">
-            <nav className="hidden md:flex flex-row justify-evenly items-center flex-grow h-[10%]  ">
-              <NavbarElement text="Home" link="/" delay={4} />
-              <NavbarElement text="About" link="/about" delay={4.5} />
-              <NavbarElement text="Projects" link="/projects" delay={5} />
-            </nav>
-            <div className="hidden md:block w-[10%] h-[10%]" />
-            <nav className="hidden md:flex flex-row justify-evenly items-center flex-grow h-[10%] ">
-              <NavbarElement text="Contact" link="/contact" delay={5.5} />
-              <NavbarElement text="Resume" link="/resume" delay={6} />
-              <NavbarElement text="Blog" link="/blog" delay={6.5} />
-            </nav>
-          </div>
-  
+          
+          <DesktopNavbar/>
+         <MobileNavbar />
+
           <div className="w-full flex justify-center items-center">
             <motion.div
               variants={ logoDrawer.parent}
@@ -146,5 +137,97 @@ function AnimatedNavbar({ children }: { children: React.ReactNode }) {
       </motion.div>
     );
   }
+
+
+  function MobileNavbar() {
+    const [isOpen, setIsOpen] = useState(false);
+    
+    return (
+
+      <>
+      <motion.div className="absolute flex justify-center items-start  h-24 w-24 z-30 md:hidden"
+      variants={{
+        hidden: {
+          opacity: 0
+         
+        },
+        show: {
+          opacity: 1,
+          transition: {
+            duration: 0.5,
+            delay: 5,
+            ease: "linear",
+          },
+        },
+
+      }}
+
+      initial="hidden"
+      animate="show"
+      >
+      <Hamburger isOpen={isOpen} setIsOpen={setIsOpen} />
+     </motion.div>
+<motion.div className={`absolute h-screen w-screen flex justify-center items-center z-20 md:hidden bg-white ${isOpen ? "block" : "hidden"}`}
+      variants={{
+        hidden: {
+          opacity: 0,
+          transition: {
+            duration: 0.5,
+            delay: 0.5,
+            ease: [0.6, -0.05, 0.01, 0.99]
+          },
+        },
+        show: {
+          opacity: 1,
+          transition: {
+            duration: 0.5,
+            delay: 0.5,
+            ease: "linear",
+          },
+        },
+
+      }}
+     
+      animate={isOpen ? "show" : "hidden"}
+>
+     <div className={` w-screen h-1/2 flex flex-col justify-evenly items-center`}
+
+     >
+      <div className="w-full h-full flex flex-col justify-center items-center">
+      <HamburgerElement text="Home" link="/" delay={0} animate={isOpen} mobile/>
+      <HamburgerElement text="About" link="/about" delay={0.25} animate={isOpen} />
+      <HamburgerElement text="Projects" link="/projects" delay={0.75} animate={isOpen} />
+      <HamburgerElement text="Contact" link="/contact" delay={1} animate={isOpen} />
+      <HamburgerElement text="Resume" link="/resume" delay={1.25} animate={isOpen} />
+      <HamburgerElement text="Blog" link="/blog" delay={1.5} animate={isOpen} />
+      </div>
+      </div>
+
+      </motion.div>
+     </>
+    )
+  }
+
+
+  function DesktopNavbar(){
+    return (
+      <div className="absolute h-full w-full px-[2%] flex justify-between">
+
+      <nav className="hidden md:flex flex-row justify-evenly items-center flex-grow h-[10%]  ">
+      <NavbarElement text="Home" link="/" delay={4} />
+      <NavbarElement text="About" link="/about" delay={4.5} />
+      <NavbarElement text="Projects" link="/projects" delay={5} />
+    </nav>
+    <div className="hidden md:block w-[10%] h-[10%]" />
+    <nav className="hidden md:flex flex-row justify-evenly items-center flex-grow h-[10%] ">
+      <NavbarElement text="Contact" link="/contact" delay={5.5} />
+      <NavbarElement text="Resume" link="/resume" delay={6} />
+      <NavbarElement text="Blog" link="/blog" delay={6.5} />
+    </nav>
+  </div>
+  
+    )
+  }
+
 
 export default AnimatedNavbar;

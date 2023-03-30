@@ -34,13 +34,17 @@ export function useMediaQuery(query: any) {
 export function useSize() {
   const [size, setSize] = useState([0, 0]);
   const [category, setCategory] = useState("all");
-
+// update the window size when the client is loaded
   useEffect(() => {
+    if (!(window.innerWidth === size[0] && window.innerHeight === size[1]) )
+    updateSize();
+
+
     function updateSize() {
       setSize([window.innerWidth, window.innerHeight]);
     }
     window.addEventListener('resize', updateSize);
-    updateSize();
+
     if (size[0] > 1536)
       setCategory("2xl");
     else if (size[0] > 1280)
@@ -49,13 +53,14 @@ export function useSize() {
       setCategory("lg");
     else if (size[0] > 768)
       setCategory("md");
-    else if (size[0] > 640)
-      setCategory("sm");
     else
-      setCategory("all")
+      setCategory("sm");
+
 
     return () => window.removeEventListener('resize', updateSize);
-  }, []);
+  }, [size]);
+
+
 
 
   return { size, category };
