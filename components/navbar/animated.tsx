@@ -194,7 +194,7 @@ console.log(size.category)
 
      >
       <div className="w-full h-full flex flex-col justify-center items-center">
-      <HamburgerElement text="Home" link="/" delay={0} animate={isOpen} mobile/>
+      <HamburgerElement text="Home" link="/" delay={0} animate={isOpen} />
       <HamburgerElement text="About" link="/about" delay={0.25} animate={isOpen} />
       <HamburgerElement text="Projects" link="/projects" delay={0.75} animate={isOpen} />
       <HamburgerElement text="Contact" link="/contact" delay={1} animate={isOpen} />
